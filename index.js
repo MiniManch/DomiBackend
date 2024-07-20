@@ -2,6 +2,7 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -17,6 +18,12 @@ db.once('open', () => {
 });
 
 app.use(express.json());
+app.use(cors({
+    origin: `${process.env.EXPRESS_APP_FRONTEND_URL}`, 
+    methods: 'GET,POST,PUT,DELETE', 
+    allowedHeaders: 'Content-Type,Authorization'
+  }));
+  
 
 const imagesRouter = require('./routes/images');
 const emailRouter = require('./routes/email');
